@@ -1,45 +1,102 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import url('./font.css');
+
+/* GENERAL */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+body {
+  background-color: #231f20;
+  font-family: typewriter, sans-serif;
+  color: #eee;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* LOGO */
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  height: 206px;
+  width: 160px;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+/* FORM */
+
+select {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  color: #eee;
+  border: 1px solid #d9d9d9;
+  padding: 0 0.7rem;
+  background: url('./assets/dropdown-arrow.png') no-repeat right #231f20;
+  appearance: none;
+  background-position-x: 480px;
+  cursor: auto;
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+textarea {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  padding: 1rem;
+  color: #eee;
+  border: 1px solid #d9d9d9;
+  background-color: #231f20;
+  height: 176px;
+  width: 509px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+button {
+  font-family: typewriter, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #eee;
+  background-color: #231f20;
+  border: 1px solid #eee;
+  width: 168px;
+  height: 37px;
+  cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.submitButtonBox {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
-.card {
-  padding: 2em;
+.formBox {
+  display: flex;
+  flex-direction: column;
 }
 
-.read-the-docs {
-  color: #888;
+.formText {
+  font-size: 18px;
+  margin-bottom: 0.5rem;
+  padding: 0 1.7rem;
+}
+
+.tequilaTypeDropDown {
+  height: 58px;
+  width: 509px;
+  margin-bottom: 3rem;
+}
+
+/* FOOTER */
+
+footer {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  color: #a6a6a6;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  padding: 10px 15px;
 }

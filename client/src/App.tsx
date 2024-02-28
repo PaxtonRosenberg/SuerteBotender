@@ -1,35 +1,23 @@
-import { useEffect, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import botenderLogo from './assets/suerte-botender-logo.svg';
+import Form from './components/Form';
 import './App.css';
 
 export default function App() {
-  const [serverData, setServerData] = useState('');
-
-  useEffect(() => {
-    async function readServerData() {
-      const resp = await fetch('/api/hello');
-      const data = await resp.json();
-
-      console.log('Data from server:', data);
-
-      setServerData(data.message);
-    }
-
-    readServerData();
-  }, []);
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <img src={botenderLogo} className="logo" alt="Suerte Botender Logo" />
+        <Form />
+        <footer>
+          <p>
+            Disclaimer: The Suerte Botender's here to suggest cocktails based on
+            your ingredients, but let's be clear—it's not as great as a real
+            mixologist. If your drink doesn't hit the mark, it's not the
+            Botender’s fault. Enjoy responsibly and remember, it's just a
+            digital recipe bot. Good luck!
+          </p>
+        </footer>
       </div>
-      <h1>{serverData}</h1>
     </>
   );
 }
