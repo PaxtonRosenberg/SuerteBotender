@@ -88,6 +88,54 @@ button {
   margin-bottom: 3rem;
 }
 
+/* RECIPE */
+
+.recipeContainer {
+  height: 440px;
+  width: 508px;
+  color: #eee;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+}
+
+.recipeHeader {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.ingredientBox,
+.instructionsBox {
+  margin-bottom: 1rem;
+}
+
+ul {
+  margin-left: 1.25rem;
+}
+
+li {
+  margin: 0.25rem 0;
+}
+
+.secondRoundButtonBox {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shareCreationTextContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.shareCreationTextBox {
+  height: 63px;
+  width: 416px;
+  font-size: 14px;
+  color: #ed6c23;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-align: center;
+  margin-top: 2rem;
+}
+
 /* FOOTER */
 
 footer {

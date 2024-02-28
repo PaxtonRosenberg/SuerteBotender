@@ -1,9 +1,17 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function Form() {
+  const navigate = useNavigate();
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    navigate('/recipe');
+  }
   return (
     <div className="formBox">
-      <form>
+      <form onSubmit={handleSubmit}>
         <p className="formText">WHICH TEQUILA ARE WE USING TODAY?</p>
-        <select id="tequilaType" className="tequilaTypeDropDown">
+        <select required id="tequilaType" className="tequilaTypeDropDown">
           <option value="">Select Tequila</option>
           <option value="Suerte Tequila A&ntilde;ejo">
             Suerte Tequila A&ntilde;ejo
@@ -16,6 +24,7 @@ export default function Form() {
         </select>
         <p className="formText">LIST OTHER INGREDIENTS YOU HAVE ON HAND</p>
         <textarea
+          required
           id="ingredients"
           placeholder="Enter other ingredients"></textarea>
         <div className="submitButtonBox">
