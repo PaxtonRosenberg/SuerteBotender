@@ -1,0 +1,8 @@
+/* FONT */
+
+@font-face {
+  font-family: typewriter;
+  src: local('typewriter'),
+    url('./fonts/zai_olivetti_lettera_22_typewriter/zai_OlivettiLettera22Typewriter.ttf')
+      format('truetype');
+}
