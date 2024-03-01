@@ -1,12 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 // import { createContext } from 'react';
 
+import { useContext } from 'react';
+import { AppContext } from './AppContext';
+
 export default function Recipe() {
   const navigate = useNavigate();
 
+  const { randomDrink, setIngredients, setIngredientsList } =
+    useContext(AppContext);
+
   function handleClick() {
     navigate('/');
+    setIngredients('');
+    setIngredientsList([]);
   }
+
+  console.log(randomDrink);
   return (
     <>
       <div className="recipeContainer">
