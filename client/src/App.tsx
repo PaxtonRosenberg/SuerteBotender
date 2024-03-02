@@ -10,10 +10,8 @@ import { Drinks } from './lib/api.ts';
 export default function App() {
   const [drinks, setDrinks] = useState<Drinks[]>([]);
   const [ingredients, setIngredients] = useState<string>(''); //Entire Ingredients Box
-  const [measurements, setMeasurements] = useState<string>(''); //Entire Measurements Box
-  const [instructions, setInstructions] = useState<string>(''); //Drink making instructions
   const [ingredientsList, setIngredientsList] = useState<string[]>([]); //List of individual ingredients
-  const [randomDrink, setRandomDrink] = useState<Drinks[]>([]);
+  const [randomDrink, setRandomDrink] = useState({});
 
   const navigate = useNavigate();
 
@@ -49,36 +47,23 @@ export default function App() {
           `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randID}`
         );
         randDrink = await res.json();
+        localStorage.setItem('drink', JSON.stringify(randDrink));
         setRandomDrink(randDrink);
         if (!res.ok) {
           throw new Error('API Issue');
         }
       }
-
-      // Ingredients
-      for (
-        let i = 1;
-        randDrink.drinks[0][`strIngredient${i}`] !== null && i <= 15;
-        i++
-      ) {
-        // console.log('ingredients', randDrink.drinks[0][`strIngredient${i}`]);
-      }
-
-      //Instructions
     } catch (err) {
       console.error(err);
     }
+
     navigate('/recipe'); //Navigates to Recipe route after retrieving recipe
   }
   const contextValue = {
     drinks,
     ingredients,
-    measurements,
-    instructions,
     ingredientsList,
     randomDrink,
-    setInstructions,
-    setMeasurements,
     setIngredients,
     setIngredientsList,
     setRandomDrink,
