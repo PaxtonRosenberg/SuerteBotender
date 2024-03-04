@@ -6,17 +6,48 @@ import './App.css';
 import { AppContext } from './components/AppContext';
 import { useState } from 'react';
 import { Drinks } from './lib/api.ts';
+// import OpenAI from "openai";
 
 export default function App() {
   const [drinks, setDrinks] = useState<Drinks[]>([]);
   const [ingredients, setIngredients] = useState<string>(''); //Entire Ingredients Box
   const [ingredientsList, setIngredientsList] = useState<string[]>([]); //List of individual ingredients
   const [randomDrink, setRandomDrink] = useState({});
+  const [tequila, setTequila] = useState('');
 
   const navigate = useNavigate();
 
+  // console.log(process.env.TOKEN_SECRET)
+  // const openai = new OpenAI();
+
+  // async function main() {
+  //   const completion = await openai.chat.completions.create({
+  //     messages: [{ role: "system", content: "You are a helpful assistant." }],
+  //     model: "gpt-3.5-turbo",
+  //   });
+
+  //   console.log(completion.choices[0]);
+  // }
+
+  // main();
+
+  async function getTequilaDrinks() {
+    try {
+      const res = await fetch(
+        'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila'
+      );
+      const tequilaDrinks = await res.json();
+      setTequila(tequilaDrinks);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  console.log('tequila', tequila);
+
   async function getRecipe() {
     try {
+      await getTequilaDrinks();
       /**
        * Select a random ingredient to look up drinks
        */
@@ -64,10 +95,13 @@ export default function App() {
     ingredients,
     ingredientsList,
     randomDrink,
+    tequila,
     setIngredients,
     setIngredientsList,
     setRandomDrink,
+    setTequila,
     getRecipe,
+    getTequilaDrinks,
   };
 
   return (

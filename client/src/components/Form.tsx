@@ -11,6 +11,7 @@ export default function Form() {
     setIngredients,
     ingredientsList,
     setIngredientsList,
+    setTequila,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -27,7 +28,11 @@ export default function Form() {
     <div className="formBox">
       <form onSubmit={handleSubmit}>
         <p className="formText">WHICH TEQUILA ARE WE USING TODAY?</p>
-        <select required id="tequilaType" className="tequilaTypeDropDown">
+        <select
+          required
+          id="tequilaType"
+          className="tequilaTypeDropDown"
+          onChange={(e) => setTequila(e.currentTarget.value)}>
           <option value="">Select Tequila</option>
           <option value="Suerte Tequila A&ntilde;ejo">
             Suerte Tequila A&ntilde;ejo

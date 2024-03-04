@@ -1,14 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 // import { createContext } from 'react';
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 export default function Recipe() {
   const navigate = useNavigate();
 
-  const { setIngredients, setIngredientsList, setRandomDrink } =
-    useContext(AppContext);
+  const {
+    setIngredients,
+    setIngredientsList,
+    setRandomDrink,
+    getTequilaDrinks,
+  } = useContext(AppContext);
+
+  useEffect(() => {
+    getTequilaDrinks();
+  }, []);
 
   function renderIngredients() {
     let drink;
