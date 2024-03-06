@@ -9,7 +9,6 @@ import { Drink } from './lib/api.ts';
 
 export default function App() {
   const [pantryInput, setPantryInput] = useState<string>(''); // User input
-  const [pantry, setPantry] = useState<string[]>([]); //Parsed input to pantry list
   const [generatedDrink, setGeneratedDrink] = useState<Drink>({
     name: '',
     ingredients: [],
@@ -20,7 +19,9 @@ export default function App() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    localStorage.setItem('drink', JSON.stringify(generatedDrink));
+    if (pantryInput) {
+      localStorage.setItem('drink', JSON.stringify(generatedDrink));
+    }
   }, [generatedDrink]);
   async function getRecipe() {
     navigate('/recipe');
@@ -62,12 +63,10 @@ export default function App() {
 
   const contextValue = {
     pantryInput,
-    pantry,
     generatedDrink,
     tequila,
     isLoading,
     setPantryInput,
-    setPantry,
     setGeneratedDrink,
     setTequila,
     getRecipe,

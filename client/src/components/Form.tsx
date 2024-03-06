@@ -1,9 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 export default function Form() {
   const { getRecipe, setPantryInput, setTequila } = useContext(AppContext);
 
+  useEffect(() => {
+    localStorage.removeItem('drink');
+  }, []);
   function handleSubmit(e: any) {
     e.preventDefault();
     getRecipe();

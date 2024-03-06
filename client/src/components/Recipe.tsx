@@ -7,6 +7,7 @@ export default function Recipe() {
 
   const {
     isLoading,
+    pantryInput,
     generatedDrink,
     setPantryInput,
     setTequila,
@@ -19,12 +20,17 @@ export default function Recipe() {
    */
 
   useEffect(() => {
+    if (pantryInput) {
+      return;
+    }
     const json = localStorage.getItem('drink');
     if (json) {
       const parsed = JSON.parse(json);
       if ('name' in parsed && parsed.name) {
         setGeneratedDrink(parsed);
         setIsLoading(false);
+      } else {
+        navigate('/');
       }
     } else {
       navigate('/');
@@ -32,11 +38,17 @@ export default function Recipe() {
   }, []);
 
   function renderIngredients() {
-    return <>{generatedDrink.ingredients}</>;
+    const result = generatedDrink.ingredients.map((ingredient, index) => {
+      return <li key={index}>{ingredient}</li>;
+    });
+    return <ul>{result}</ul>;
   }
 
   function renderInstructions() {
-    return <>{generatedDrink.instructions}</>;
+    const result = generatedDrink.instructions.map((instruction, index) => {
+      return <li key={index}>{instruction}</li>;
+    });
+    return <ul>{result}</ul>;
   }
 
   function handleClick() {
