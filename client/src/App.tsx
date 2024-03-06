@@ -4,7 +4,7 @@ import Recipe from './components/Recipe';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import { AppContext } from './components/AppContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Drink } from './lib/api.ts';
 
 export default function App() {
@@ -12,18 +12,18 @@ export default function App() {
   const [pantry, setPantry] = useState<string[]>([]); //Parsed input to pantry list
   const [generatedDrink, setGeneratedDrink] = useState<Drink>({
     name: '',
-    ingredients: '',
-    instructions: '',
+    ingredients: [],
+    instructions: [],
   });
   const [tequila, setTequila] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
-
+  useEffect(() => {
+    localStorage.setItem('drink', JSON.stringify(generatedDrink));
+  }, [generatedDrink]);
   async function getRecipe() {
     navigate('/recipe');
-    localStorage.setItem('pantry', JSON.stringify(pantryInput));
-    localStorage.setItem('tequila', JSON.stringify(tequila));
     const res = await fetch('/api/botender', {
       method: 'POST',
       headers: {
@@ -35,7 +35,28 @@ export default function App() {
       }),
     });
     const drink = await res.json();
-    console.dir(drink.choices[0].message.content);
+    const apiMessage: string = drink.choices[0].message.content;
+    const name = apiMessage
+      .substring(5, apiMessage.indexOf('Ingredients:'))
+      .trim();
+    const ingredientsString = apiMessage.substring(
+      apiMessage.indexOf('Ingredients:') + 12,
+      apiMessage.indexOf('Instructions:')
+    );
+    const ingredients = ingredientsString
+      .substring(2)
+      .split('- ')
+      .map((word) => word.trim());
+
+    const instructionsString = apiMessage.substring(
+      apiMessage.indexOf('Instructions:') + 13
+    );
+    const instructions = instructionsString
+      .substring(1)
+      .split(`\n`)
+      .map((sentence) => sentence.substring(sentence.indexOf(' ')).trim());
+
+    setGeneratedDrink({ name, ingredients, instructions });
     setIsLoading(false);
   }
 

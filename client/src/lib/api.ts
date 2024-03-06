@@ -1,5 +1,5 @@
 export type Drink = {
   name: string;
-  ingredients: string;
-  instructions: string;
+  ingredients: string[];
+  instructions: string[];
 };

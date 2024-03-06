@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 export default function Recipe() {
@@ -9,11 +9,27 @@ export default function Recipe() {
     isLoading,
     generatedDrink,
     setPantryInput,
-    setPantry,
     setTequila,
     setGeneratedDrink,
     setIsLoading,
   } = useContext(AppContext);
+
+  /**
+   * Navigate to form if refresh before drink is generated
+   */
+
+  useEffect(() => {
+    const json = localStorage.getItem('drink');
+    if (json) {
+      const parsed = JSON.parse(json);
+      if ('name' in parsed && parsed.name) {
+        setGeneratedDrink(parsed);
+        setIsLoading(false);
+      }
+    } else {
+      navigate('/');
+    }
+  }, []);
 
   function renderIngredients() {
     return <>{generatedDrink.ingredients}</>;
@@ -27,8 +43,7 @@ export default function Recipe() {
     navigate('/');
     setTequila('');
     setPantryInput('');
-    setPantry([]);
-    setGeneratedDrink({ name: '', ingredients: '', instructions: '' });
+    setGeneratedDrink({ name: '', ingredients: [], instructions: [] });
     setIsLoading(true);
     localStorage.removeItem('drink');
   }

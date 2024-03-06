@@ -3,12 +3,10 @@ import type { Drink } from '../lib/api';
 
 export type AppContextValues = {
   pantryInput: string;
-  pantry: string[];
-  generatedDrink: Record<string, string>;
+  generatedDrink: Drink;
   tequila: string;
   isLoading: boolean;
   setPantryInput: (x: string) => void;
-  setPantry: (x: string[]) => void;
   setGeneratedDrink: (x: Drink) => void;
   setTequila: (x: string) => void;
   setIsLoading: (x: boolean) => void;
@@ -17,12 +15,10 @@ export type AppContextValues = {
 
 export const AppContext = createContext<AppContextValues>({
   pantryInput: '',
-  pantry: [],
-  generatedDrink: {},
+  generatedDrink: { name: '', ingredients: [], instructions: [] },
   tequila: '',
   isLoading: true,
   setPantryInput: () => undefined,
-  setPantry: () => undefined,
   setGeneratedDrink: () => undefined,
   setTequila: () => undefined,
   setIsLoading: () => undefined,
