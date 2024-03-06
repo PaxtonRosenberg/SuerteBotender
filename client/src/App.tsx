@@ -56,8 +56,9 @@ export default function App() {
       .substring(1)
       .split(`\n`)
       .map((sentence) => sentence.substring(sentence.indexOf(' ')).trim());
-
-    setGeneratedDrink({ name, ingredients, instructions });
+    if (isLoading) {
+      setGeneratedDrink({ name, ingredients, instructions });
+    }
     setIsLoading(false);
   }
 
