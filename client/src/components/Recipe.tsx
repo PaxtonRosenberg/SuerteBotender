@@ -11,7 +11,6 @@ export default function Recipe() {
     setIngredients,
     setIngredientsList,
     setRandomDrink,
-    getTequilaDrinks,
   } = useContext(AppContext);
 
   useEffect(() => {

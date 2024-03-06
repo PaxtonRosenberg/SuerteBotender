@@ -12,7 +12,6 @@ export type AppContextValues = {
   setRandomDrink: (x: Record<string, string>) => void;
   setTequila: (x: string) => void;
   getRecipe: () => void;
-  getTequilaDrinks: () => void;
 };
 
 export const AppContext = createContext<AppContextValues>({
@@ -26,5 +25,4 @@ export const AppContext = createContext<AppContextValues>({
   setTequila: () => undefined,
   getRecipe: () => undefined,
   setRandomDrink: () => undefined,
-  getTequilaDrinks: () => undefined,
 });
