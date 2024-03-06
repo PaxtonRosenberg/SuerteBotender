@@ -14,6 +14,15 @@ export default function Form() {
     setTequila,
   } = useContext(AppContext);
 
+  // async function main() {
+  //   const completion = await openai.chat.completions.create({
+  //     messages: [{ role: 'system', content: 'You are a helpful assistant.' }],
+  //     model: 'gpt-4-0125-preview',
+  //   });
+
+  //   console.log('test', completion.choices[0]);
+  // }
+
   useEffect(() => {
     if (ingredientsList && ingredients.length > 0) {
       getRecipe();

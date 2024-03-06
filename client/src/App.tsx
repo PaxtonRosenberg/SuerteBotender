@@ -6,7 +6,6 @@ import './App.css';
 import { AppContext } from './components/AppContext';
 import { useState } from 'react';
 import { Drinks } from './lib/api.ts';
-import OpenAI from 'openai';
 
 export default function App() {
   const [drinks, setDrinks] = useState<Drinks[]>([]);
@@ -17,20 +16,18 @@ export default function App() {
 
   const navigate = useNavigate();
 
-  console.log('tequila', tequila);
-
   async function getRecipe() {
-    const openai = new OpenAI();
-    try {
-      const res = await fetch(`https://api.openai.com/v1/chat/completions`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${process.env.TOKEN_SECRET}`,
-        },
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    // const openai = new OpenAI();
+    // try {
+    //   const res = await fetch(`https://api.openai.com/v1/chat/completions`, {
+    //     method: 'POST',
+    //     headers: {
+    //       Authorization: `Bearer ${process.env.TOKEN_SECRET}`,
+    //     },
+    //   });
+    // } catch (err) {
+    //   console.error(err);
+    // }
 
     navigate('/recipe'); //Navigates to Recipe route after retrieving recipe
   }

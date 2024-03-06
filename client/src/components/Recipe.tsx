@@ -7,15 +7,10 @@ import { AppContext } from './AppContext';
 export default function Recipe() {
   const navigate = useNavigate();
 
-  const {
-    setIngredients,
-    setIngredientsList,
-    setRandomDrink,
-  } = useContext(AppContext);
+  const { setIngredients, setIngredientsList, setRandomDrink } =
+    useContext(AppContext);
 
-  useEffect(() => {
-    getTequilaDrinks();
-  }, []);
+  useEffect(() => {}, []);
 
   function renderIngredients() {
     let drink;
