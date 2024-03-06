@@ -2,11 +2,21 @@ import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 export default function Form() {
-  const { getRecipe, setPantryInput, setTequila } = useContext(AppContext);
+  const {
+    getRecipe,
+    setPantryInput,
+    setTequila,
+    setIsLoading,
+    setGeneratedDrink,
+  } = useContext(AppContext);
 
   useEffect(() => {
     localStorage.removeItem('drink');
+    setGeneratedDrink({ name: '', ingredients: [], instructions: [] });
+    setPantryInput('');
+    setIsLoading(true);
   }, []);
+
   function handleSubmit(e: any) {
     e.preventDefault();
     getRecipe();

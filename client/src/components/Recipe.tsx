@@ -20,9 +20,6 @@ export default function Recipe() {
    */
 
   useEffect(() => {
-    if (pantryInput) {
-      return;
-    }
     const json = localStorage.getItem('drink');
     if (json) {
       const parsed = JSON.parse(json);
@@ -33,7 +30,9 @@ export default function Recipe() {
         navigate('/');
       }
     } else {
-      navigate('/');
+      if (!pantryInput) {
+        navigate('/');
+      }
     }
   }, []);
 
