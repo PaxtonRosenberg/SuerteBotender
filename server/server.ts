@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- Remove when used */
 import 'dotenv/config';
 import express from 'express';
-import pg from 'pg';
 import {
   ClientError,
   defaultMiddleware,
@@ -15,8 +14,31 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello, World!' });
+app.post('/api/botender', async (req, res) => {
+  try {
+    if (!(req.body.tequila && req.body.ingredients)) {
+      throw new Error('Invalid Body');
+    }
+    const { tequila, ingredients } = req.body;
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: `You are a bartender specializing in making drinks with Suerte brand tequila and specific, household ingredients.`,
+        },
+        {
+          role: 'user',
+          content: `I have ${tequila}, ${ingredients}. Can you provide me with both ingredients, measurements and directions to make a tasty cocktail with the ingredients listed? Output the results with drinkName, ingredients, and instructions.`,
+        },
+      ],
+      model: 'gpt-4',
+    });
+    console.log(completion.choices[0].message.content);
+    res.status(200).json(completion);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
 });
 
 app.use(errorMiddleware);

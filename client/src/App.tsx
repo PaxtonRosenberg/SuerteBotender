@@ -5,43 +5,45 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import { AppContext } from './components/AppContext';
 import { useState } from 'react';
-import { Drinks } from './lib/api.ts';
+import { Drink } from './lib/api.ts';
 
 export default function App() {
-  const [drinks, setDrinks] = useState<Drinks[]>([]);
-  const [ingredients, setIngredients] = useState<string>(''); //Entire Ingredients Box
-  const [ingredientsList, setIngredientsList] = useState<string[]>([]); //List of individual ingredients
-  const [randomDrink, setRandomDrink] = useState({});
+  const [pantryInput, setPantryInput] = useState<string>(''); // User input
+  const [pantry, setPantry] = useState<string[]>([]); //Parsed input to pantry list
+  const [generatedDrink, setGeneratedDrink] = useState<Drink>({
+    name: '',
+    ingredients: '',
+    instructions: '',
+  });
   const [tequila, setTequila] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
   async function getRecipe() {
-    // const openai = new OpenAI();
-    // try {
-    //   const res = await fetch(`https://api.openai.com/v1/chat/completions`, {
-    //     method: 'POST',
-    //     headers: {
-    //       Authorization: `Bearer ${process.env.TOKEN_SECRET}`,
-    //     },
-    //   });
-    // } catch (err) {
-    //   console.error(err);
-    // }
-
-    navigate('/recipe'); //Navigates to Recipe route after retrieving recipe
+    navigate('/recipe');
+    const res = await fetch('/api/botender', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ tequila: 'test', ingredients: 'test' }),
+    });
+    setIsLoading(false);
   }
+
   const contextValue = {
-    drinks,
-    ingredients,
-    ingredientsList,
-    randomDrink,
+    pantryInput,
+    pantry,
+    generatedDrink,
     tequila,
-    setIngredients,
-    setIngredientsList,
-    setRandomDrink,
+    isLoading,
+    setPantryInput,
+    setPantry,
+    setGeneratedDrink,
     setTequila,
     getRecipe,
+    setIsLoading,
   };
 
   return (

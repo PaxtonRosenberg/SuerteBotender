@@ -7,31 +7,22 @@ export default function Form() {
 
   const {
     getRecipe,
-    ingredients,
-    setIngredients,
-    ingredientsList,
-    setIngredientsList,
+    pantryInput,
+    setPantryInput,
+    pantry,
+    setPantry,
     setTequila,
   } = useContext(AppContext);
 
-  // async function main() {
-  //   const completion = await openai.chat.completions.create({
-  //     messages: [{ role: 'system', content: 'You are a helpful assistant.' }],
-  //     model: 'gpt-4-0125-preview',
-  //   });
-
-  //   console.log('test', completion.choices[0]);
-  // }
-
   useEffect(() => {
-    if (ingredientsList && ingredients.length > 0) {
+    if (pantry && pantry.length > 0) {
       getRecipe();
     }
-  }, [ingredientsList, navigate]);
+  }, [pantry, navigate]);
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    setIngredientsList(ingredients.split(',')); //State setter triggers Recipe Lookup
+    setPantry(pantryInput.split(',')); //State setter triggers Recipe Lookup
   }
   return (
     <div className="formBox">
@@ -56,7 +47,7 @@ export default function Form() {
         <textarea
           required
           id="ingredients"
-          onChange={(e) => setIngredients(e.currentTarget.value)}
+          onChange={(e) => setPantryInput(e.currentTarget.value)}
           placeholder="Enter other ingredients"></textarea>
         <div className="submitButtonBox">
           <button>MAKE A DRINK</button>
