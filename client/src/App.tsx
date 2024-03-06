@@ -22,13 +22,20 @@ export default function App() {
 
   async function getRecipe() {
     navigate('/recipe');
+    localStorage.setItem('pantry', JSON.stringify(pantryInput));
+    localStorage.setItem('tequila', JSON.stringify(tequila));
     const res = await fetch('/api/botender', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ tequila: 'test', ingredients: 'test' }),
+      body: JSON.stringify({
+        tequila: tequila,
+        ingredients: pantryInput.trim(),
+      }),
     });
+    const drink = await res.json();
+    console.dir(drink.choices[0].message.content);
     setIsLoading(false);
   }
 

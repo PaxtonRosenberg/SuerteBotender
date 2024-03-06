@@ -28,12 +28,11 @@ app.post('/api/botender', async (req, res) => {
         },
         {
           role: 'user',
-          content: `I have ${tequila}, ${ingredients}. Can you provide me with both ingredients, measurements and directions to make a tasty cocktail with the ingredients listed? Output the results with drinkName, ingredients, and instructions.`,
+          content: `I have ${tequila} tequila and following ingredients: ${ingredients}. Can you provide me with both ingredients, measurements and directions to make a tasty cocktail with the ingredients listed? Output the results with drinkName, ingredients, and instructions.`,
         },
       ],
-      model: 'gpt-4',
+      model: 'gpt-3.5-turbo',
     });
-    console.log(completion.choices[0].message.content);
     res.status(200).json(completion);
   } catch (err) {
     console.log(err);
