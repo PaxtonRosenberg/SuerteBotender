@@ -18,11 +18,15 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
+
+  console.log(isLoading);
+
   useEffect(() => {
     if (pantryInput) {
       localStorage.setItem('drink', JSON.stringify(generatedDrink));
     }
   }, [generatedDrink]);
+
   async function getRecipe() {
     navigate('/recipe');
     const res = await fetch('/api/botender', {
@@ -40,25 +44,38 @@ export default function App() {
     const name = apiMessage
       .substring(5, apiMessage.indexOf('Ingredients:'))
       .trim();
-    const ingredientsString = apiMessage.substring(
-      apiMessage.indexOf('Ingredients:') + 12,
-      apiMessage.indexOf('Instructions:')
-    );
-    const ingredients = ingredientsString
-      .substring(2)
-      .split('- ')
-      .map((word) => word.trim());
 
-    const instructionsString = apiMessage.substring(
-      apiMessage.indexOf('Instructions:') + 13
-    );
-    const instructions = instructionsString
-      .substring(1)
-      .split(`\n`)
-      .map((sentence) => sentence.substring(sentence.indexOf(' ')).trim());
-    if (isLoading) {
-      setGeneratedDrink({ name, ingredients, instructions });
+    if (apiMessage.includes("I'm sorry")) {
+      navigate('/');
+
+      alert(`Invalid Input: ${apiMessage}`);
+    } else {
+      const ingredientsString = apiMessage.substring(
+        apiMessage.indexOf('Ingredients:') + 12,
+        apiMessage.indexOf('Instructions:')
+      );
+
+      const ingredients = ingredientsString
+        .substring(2)
+        .split('- ')
+        .map((word) => word.trim());
+
+      const instructionsString = apiMessage.substring(
+        apiMessage.indexOf('Instructions:') + 13
+      );
+
+      const instructions = instructionsString
+        .substring(1)
+        .split(`\n`)
+        .map((sentence) => sentence.substring(sentence.indexOf(' ')).trim());
+
+      // Updating state with the new drink info
+
+      if (isLoading) {
+        setGeneratedDrink({ name, ingredients, instructions });
+      }
     }
+
     setIsLoading(false);
   }
 

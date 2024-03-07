@@ -40,7 +40,9 @@ export default function Form() {
           <option value="Suerte Tequila Blanco">Suerte Tequila Blanco</option>
           <option value="Suerte Tequila Gold">Suerte Tequila Gold</option>
         </select>
-        <p className="formText">LIST OTHER INGREDIENTS YOU HAVE ON HAND</p>
+        <p className="formText">
+          LIST ALL OF THE OTHER INGREDIENTS YOU HAVE ON HAND
+        </p>
         <textarea
           required
           id="ingredients"
