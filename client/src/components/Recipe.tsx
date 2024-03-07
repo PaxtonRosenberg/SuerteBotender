@@ -84,7 +84,13 @@ export default function Recipe() {
           <p>
             Mix, snap, sip, and share your Botender masterpiece on social media
             with the hashtag #suertebotender. And don't forget to tag
-            @suertetequila. Cheers to virtual cheers!
+            <a
+              className="instagramLink"
+              href="https://www.instagram.com/suertetequila/?hl=en">
+              {' '}
+              @suertetequila
+            </a>
+            . Cheers to virtual cheers!
           </p>
         </div>
       </div>

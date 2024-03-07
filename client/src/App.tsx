@@ -45,7 +45,7 @@ export default function App() {
       .substring(5, apiMessage.indexOf('Ingredients:'))
       .trim();
 
-    if (apiMessage.includes("I'm sorry")) {
+    if (apiMessage.includes("I'm sorry") || apiMessage === undefined) {
       navigate('/');
 
       alert(`Invalid Input: ${apiMessage}`);
