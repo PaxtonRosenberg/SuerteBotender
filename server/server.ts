@@ -48,6 +48,36 @@ app.post('/api/botender', async (req, res) => {
         },
         {
           role: 'user',
+          content: `I have Suerte Tequila Resposado and the following ingredients:
+          lemon, beef, chicken, lamb, pineapple, mint, orange, grapefruit.
+          Create a fun and unqiue drink name that
+          incorporates both the ingredients and Suerte branding, ingredients needed to make the drink,
+          measurements for the ingredients and instructions to make a tasty cocktail. If you cannot use the some of the listed ingredients, omit the ingredients you cannot use and return the example output. `,
+        },
+        {
+          role: 'assistant',
+          content: `
+            "Name: Citrus-Mint Suerte
+
+            Ingredients:
+            - 2 oz Suerte Tequila Reposado
+            - Juice of 1/2 lemon
+            - Juice of 1/4 grapefruit
+            - Juice of 1/2 orange
+            - 4-5 fresh mint leaves
+            - Ice
+
+            Instructions:
+            1. In a cocktail shaker, muddle the fresh mint leaves to release their oils.
+            2. Add Suerte Tequila Reposado, lemon juice, grapefruit juice, orange juice, and a handful of ice to the shaker.
+            3. Shake vigorously to combine the ingredients and chill the mixture.
+            4. Strain the cocktail into a glass filled with ice.
+            5. Garnish with a mint sprig or a citrus slice, if desired.
+            6. Enjoy your refreshing Citrus-Mint Suerte cocktail!" End output immediately after the instructions.
+            `,
+        },
+        {
+          role: 'user',
           content: `I have ${tequila} tequila and the following ingredients:
           ${ingredients}. Create a fun and unqiue drink name that
           incorporates both the ingredients and Suerte branding, ingredients needed,
@@ -57,7 +87,7 @@ app.post('/api/botender', async (req, res) => {
           let the user know with a response that begins with I'm sorry, otherwise, create a tasty cocktail.`,
         },
       ],
-      model: 'gpt-3.5-turbo-0125',
+      model: 'gpt-4',
     });
     res.status(200).json(completion);
   } catch (err) {
