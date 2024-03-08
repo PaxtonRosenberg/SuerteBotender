@@ -48,7 +48,15 @@ app.post('/api/botender', async (req, res) => {
         },
         {
           role: 'user',
-          content: `I have ${tequila} tequila and the following ingredients: ${ingredients}. Can you provide me with a fun and creative drink name that incorporates both the ingredients and Suerte branding, ingredients needed, measurements for the ingredients and instructions to make a tasty cocktail. Try to make the best tasting cocktail using only the tequila and ingredients specified, please do not add extra ingredients though. If the input is not edible, like socks, please let the user know with a response that begins with I'm sorry. If the ingredient is a food item, but it is not safe to consume, like raw chicken, please let the user know with a response starting with "I'm sorry".`,
+          content: `I have ${tequila} tequila and the following ingredients:
+          ${ingredients}. Can you provide me with a fun and creative drink name that
+          incorporates both the ingredients and Suerte branding, ingredients needed,
+          measurements for the ingredients and instructions to make a tasty cocktail.
+          Try to make the best tasting cocktail using only the tequila and ingredients specified,
+          please do not add extra ingredients though. If the input is not edible, like socks,
+          please let the user know with a response that begins with I'm sorry. If the
+          ingredient is a food item, but it is not safe to consume, like raw chicken, please
+          let the user know with a response starting with "I'm sorry".`,
         },
       ],
       model: 'gpt-3.5-turbo-0125',

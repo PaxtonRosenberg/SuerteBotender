@@ -128,16 +128,27 @@ li {
 .shareCreationTextBox {
   height: 63px;
   width: 416px;
-  font-size: 14px;
+  font-size: 12px;
   color: #ed6c23;
   font-family: 'Roboto Condensed', sans-serif;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .instagramLink {
   color: #ed6c23;
   text-decoration: none;
+}
+
+/* ERROR LANDING PAGE */
+
+.errorBox {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  height: 100px;
+  width: 508px;
+  text-align: center;
 }
 
 /* FOOTER */

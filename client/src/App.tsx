@@ -1,6 +1,7 @@
 import botenderLogo from './assets/suerte-botender-logo.svg';
 import Form from './components/Form';
 import Recipe from './components/Recipe';
+import Error from './components/Error.tsx';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import { AppContext } from './components/AppContext';
@@ -16,10 +17,9 @@ export default function App() {
   });
   const [tequila, setTequila] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
-
-  console.log(isLoading);
 
   useEffect(() => {
     if (pantryInput) {
@@ -40,15 +40,18 @@ export default function App() {
       }),
     });
     const drink = await res.json();
-    const apiMessage: string = drink.choices[0].message.content;
+    const apiMessage = drink.choices[0].message.content;
     const name = apiMessage
       .substring(5, apiMessage.indexOf('Ingredients:'))
       .trim();
 
-    if (apiMessage.includes("I'm sorry") || apiMessage === undefined) {
-      navigate('/');
-
-      alert(`Invalid Input: ${apiMessage}`);
+    if (
+      apiMessage.includes("I'm sorry") ||
+      name === '' ||
+      apiMessage === undefined
+    ) {
+      navigate('/error');
+      setErrorMessage(apiMessage);
     } else {
       const ingredientsString = apiMessage.substring(
         apiMessage.indexOf('Ingredients:') + 12,
@@ -99,6 +102,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Form />}></Route>
             <Route path="/recipe" element={<Recipe />}></Route>
+            <Route
+              path="/error"
+              element={<Error errorMessage={errorMessage} />}></Route>
           </Routes>
           <footer>
             <p>
