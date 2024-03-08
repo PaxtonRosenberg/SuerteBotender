@@ -4,104 +4,91 @@ import Recipe from './components/Recipe';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import { AppContext } from './components/AppContext';
-import { useState } from 'react';
-import { Drinks } from './lib/api.ts';
-// import OpenAI from "openai";
+import { useState, useEffect } from 'react';
+import { Drink } from './lib/api.ts';
 
 export default function App() {
-  const [drinks, setDrinks] = useState<Drinks[]>([]);
-  const [ingredients, setIngredients] = useState<string>(''); //Entire Ingredients Box
-  const [ingredientsList, setIngredientsList] = useState<string[]>([]); //List of individual ingredients
-  const [randomDrink, setRandomDrink] = useState({});
+  const [pantryInput, setPantryInput] = useState<string>(''); // User input
+  const [generatedDrink, setGeneratedDrink] = useState<Drink>({
+    name: '',
+    ingredients: [],
+    instructions: [],
+  });
   const [tequila, setTequila] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
 
-  // console.log(process.env.TOKEN_SECRET)
-  // const openai = new OpenAI();
+  console.log(isLoading);
 
-  // async function main() {
-  //   const completion = await openai.chat.completions.create({
-  //     messages: [{ role: "system", content: "You are a helpful assistant." }],
-  //     model: "gpt-3.5-turbo",
-  //   });
-
-  //   console.log(completion.choices[0]);
-  // }
-
-  // main();
-
-  async function getTequilaDrinks() {
-    try {
-      const res = await fetch(
-        'https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila'
-      );
-      const tequilaDrinks = await res.json();
-      setTequila(tequilaDrinks);
-    } catch (err) {
-      console.error(err);
+  useEffect(() => {
+    if (pantryInput) {
+      localStorage.setItem('drink', JSON.stringify(generatedDrink));
     }
-  }
-
-  console.log('tequila', tequila);
+  }, [generatedDrink]);
 
   async function getRecipe() {
-    try {
-      await getTequilaDrinks();
-      /**
-       * Select a random ingredient to look up drinks
-       */
-      const i = Math.floor(Math.random() * ingredientsList.length);
-      const res = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${encodeURI(
-          ingredientsList[i].trim()
-        )}`
-      );
-      if (!res.ok) {
-        throw new Error('API Issue');
-      }
+    navigate('/recipe');
+    const res = await fetch('/api/botender', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tequila: tequila,
+        ingredients: pantryInput.trim(),
+      }),
+    });
+    const drink = await res.json();
+    const apiMessage: string = drink.choices[0].message.content;
+    const name = apiMessage
+      .substring(5, apiMessage.indexOf('Ingredients:'))
+      .trim();
 
-      let drinks;
-      if (res.headers.get('content-type') == 'application/json') {
-        drinks = await res.json();
-        setDrinks(drinks);
-        // console.log('drinks', drinks)
+    if (apiMessage.includes("I'm sorry") || apiMessage === undefined) {
+      navigate('/');
+
+      alert(`Invalid Input: ${apiMessage}`);
+    } else {
+      const ingredientsString = apiMessage.substring(
+        apiMessage.indexOf('Ingredients:') + 12,
+        apiMessage.indexOf('Instructions:')
+      );
+
+      const ingredients = ingredientsString
+        .substring(2)
+        .split('- ')
+        .map((word) => word.trim());
+
+      const instructionsString = apiMessage.substring(
+        apiMessage.indexOf('Instructions:') + 13
+      );
+
+      const instructions = instructionsString
+        .substring(1)
+        .split(`\n`)
+        .map((sentence) => sentence.substring(sentence.indexOf(' ')).trim());
+
+      // Updating state with the new drink info
+
+      if (isLoading) {
+        setGeneratedDrink({ name, ingredients, instructions });
       }
-      /**
-       * Select a random drink to look up recipe
-       */
-      let randDrink;
-      if (drinks) {
-        const i = Math.floor(Math.random() * drinks.drinks.length);
-        const randID = drinks.drinks[i].idDrink;
-        const res = await fetch(
-          `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${randID}`
-        );
-        randDrink = await res.json();
-        localStorage.setItem('drink', JSON.stringify(randDrink));
-        setRandomDrink(randDrink);
-        if (!res.ok) {
-          throw new Error('API Issue');
-        }
-      }
-    } catch (err) {
-      console.error(err);
     }
 
-    navigate('/recipe'); //Navigates to Recipe route after retrieving recipe
+    setIsLoading(false);
   }
+
   const contextValue = {
-    drinks,
-    ingredients,
-    ingredientsList,
-    randomDrink,
+    pantryInput,
+    generatedDrink,
     tequila,
-    setIngredients,
-    setIngredientsList,
-    setRandomDrink,
+    isLoading,
+    setPantryInput,
+    setGeneratedDrink,
     setTequila,
     getRecipe,
-    getTequilaDrinks,
+    setIsLoading,
   };
 
   return (

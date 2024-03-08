@@ -1,28 +1,25 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 export default function Form() {
-  const navigate = useNavigate();
-
   const {
     getRecipe,
-    ingredients,
-    setIngredients,
-    ingredientsList,
-    setIngredientsList,
+    setPantryInput,
     setTequila,
+    setIsLoading,
+    setGeneratedDrink,
   } = useContext(AppContext);
 
   useEffect(() => {
-    if (ingredientsList && ingredients.length > 0) {
-      getRecipe();
-    }
-  }, [ingredientsList, navigate]);
+    localStorage.removeItem('drink');
+    setGeneratedDrink({ name: '', ingredients: [], instructions: [] });
+    setPantryInput('');
+    setIsLoading(true);
+  }, []);
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    setIngredientsList(ingredients.split(',')); //State setter triggers Recipe Lookup
+    getRecipe();
   }
   return (
     <div className="formBox">
@@ -43,11 +40,13 @@ export default function Form() {
           <option value="Suerte Tequila Blanco">Suerte Tequila Blanco</option>
           <option value="Suerte Tequila Gold">Suerte Tequila Gold</option>
         </select>
-        <p className="formText">LIST OTHER INGREDIENTS YOU HAVE ON HAND</p>
+        <p className="formText">
+          LIST ALL OF THE OTHER INGREDIENTS YOU HAVE ON HAND
+        </p>
         <textarea
           required
           id="ingredients"
-          onChange={(e) => setIngredients(e.currentTarget.value)}
+          onChange={(e) => setPantryInput(e.currentTarget.value)}
           placeholder="Enter other ingredients"></textarea>
         <div className="submitButtonBox">
           <button>MAKE A DRINK</button>

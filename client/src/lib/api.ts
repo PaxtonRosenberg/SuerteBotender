@@ -1,5 +1,5 @@
-export type Drinks = {
-  idDrink: number;
-  strDrink: string;
-  strDrinkThumb: string;
+export type Drink = {
+  name: string;
+  ingredients: string[];
+  instructions: string[];
 };

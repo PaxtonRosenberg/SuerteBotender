@@ -23,7 +23,7 @@ body {
 /* LOGO */
 
 .logo {
-  height: 206px;
+  height: 160px;
   width: 160px;
 }
 
@@ -135,6 +135,11 @@ li {
   margin-top: 2rem;
 }
 
+.instagramLink {
+  color: #ed6c23;
+  text-decoration: none;
+}
+
 /* FOOTER */
 
 footer {
@@ -146,4 +151,65 @@ footer {
   text-align: center;
   width: 100%;
   padding: 10px 15px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (width <= 768px) {
+  .tequilaTypeDropDown,
+  #ingredients {
+    width: 400px;
+  }
+
+  select {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 14px;
+    color: #eee;
+    border: 1px solid #d9d9d9;
+    padding: 0 0.7rem;
+    background: url('./assets/dropdown-arrow.png') no-repeat right #231f20;
+    appearance: none;
+    background-position-x: 375px;
+    cursor: auto;
+  }
+
+  textarea {
+    font-size: 14px;
+  }
+
+  .recipeContainer {
+    height: 350px;
+    width: 440px;
+    color: #eee;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 12px;
+  }
+
+  button {
+    font-family: typewriter, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #eee;
+    background-color: #231f20;
+    border: 1px solid #eee;
+    width: 138px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  .shareCreationTextBox {
+    height: 63px;
+    width: 416px;
+    font-size: 12px;
+    color: #ed6c23;
+    font-family: 'Roboto Condensed', sans-serif;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  footer {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 10px;
+    padding: 7px 10px;
+  }
 }

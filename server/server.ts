@@ -1,48 +1,64 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- Remove when used */
 import 'dotenv/config';
 import express from 'express';
-import pg from 'pg';
 import {
   ClientError,
   defaultMiddleware,
   errorMiddleware,
 } from './lib/index.js';
+import OpenAI from 'openai';
 
-const key = process.env.TOKEN_SECRET;
-console.log('key:', key);
-
-const connectionString =
-  process.env.DATABASE_URL ||
-  `postgresql://${process.env.RDS_USERNAME}:${process.env.RDS_PASSWORD}@${process.env.RDS_HOSTNAME}:${process.env.RDS_PORT}/${process.env.RDS_DB_NAME}`;
-const db = new pg.Pool({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+const openai = new OpenAI();
 
 const app = express();
 
-// Create paths for static directories
-const reactStaticDir = new URL('../client/dist', import.meta.url).pathname;
-const uploadsStaticDir = new URL('public', import.meta.url).pathname;
-
-app.use(express.static(reactStaticDir));
-// Static directory for file uploads server/public/
-app.use(express.static(uploadsStaticDir));
 app.use(express.json());
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello, World!' });
-});
+app.post('/api/botender', async (req, res) => {
+  try {
+    if (!(req.body.tequila && req.body.ingredients)) {
+      throw new Error('Invalid Body');
+    }
+    const { tequila, ingredients } = req.body;
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: `
+            You are a bartender specializing in making drinks with Suerte brand tequila and specific, household ingredients.
 
-/*
- * Middleware that handles paths that aren't handled by static middleware
- * or API route handlers.
- * This must be the _last_ non-error middleware installed, after all the
- * get/post/put/etc. route handlers and just before errorMiddleware.
- */
-app.use(defaultMiddleware(reactStaticDir));
+            Example Output:
+
+            "Name: Pina-Lime-Suerte
+
+            Ingredients:
+            - 2 oz Suerte Tequila Blanco
+            - 1/2 cup chopped pineapple
+            - Juice of 1 lime
+            - Ice
+
+            Instructions:
+            1. In a cocktail shaker, muddle the chopped pineapple to extract its juices.
+            2. Add the Suerte Tequila Blanco, lime juice, and a handful of ice to the shaker.
+            3. Shake well to chill the mixture and combine the ingredients.
+            4. Strain the cocktail into a glass filled with ice.
+            5. Garnish with a slice of pineapple or lime, if desired.
+            6. Enjoy your refreshing Pina-Lime Suerte cocktail!" End output immediately after the instructions.
+            `,
+        },
+        {
+          role: 'user',
+          content: `I have ${tequila} tequila and the following ingredients: ${ingredients}. Can you provide me with a fun and creative drink name that incorporates both the ingredients and Suerte branding, ingredients needed, measurements for the ingredients and instructions to make a tasty cocktail. Try to make the best tasting cocktail using only the tequila and ingredients specified, please do not add extra ingredients though. If the input is not edible, like socks, please let the user know with a response that begins with I'm sorry. If the ingredient is a food item, but it is not safe to consume, like raw chicken, please let the user know with a response starting with "I'm sorry".`,
+        },
+      ],
+      model: 'gpt-3.5-turbo-0125',
+    });
+    res.status(200).json(completion);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+});
 
 app.use(errorMiddleware);
 
