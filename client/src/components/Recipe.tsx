@@ -37,14 +37,20 @@ export default function Recipe() {
   }, []);
 
   function renderIngredients() {
-    const result = generatedDrink.ingredients.map((ingredient, index) => {
+    const temp = generatedDrink.ingredients.filter((ingredient) => {
+      if (ingredient) return ingredient;
+    });
+    const result = temp.map((ingredient, index) => {
       return <li key={index}>{ingredient}</li>;
     });
     return <ul>{result}</ul>;
   }
 
   function renderInstructions() {
-    const result = generatedDrink.instructions.map((instruction, index) => {
+    const temp = generatedDrink.instructions.filter((instruction) => {
+      if (instruction) return instruction;
+    });
+    const result = temp.map((instruction, index) => {
       return <li key={index}>{instruction}</li>;
     });
     return <ul>{result}</ul>;

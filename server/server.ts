@@ -25,9 +25,7 @@ app.post('/api/botender', async (req, res) => {
         {
           role: 'system',
           content: `
-            You are a bartender specializing in making drinks with Suerte brand tequila and specific ingredients.
-
-            Example Output:
+            Suerte is the brand name for a tequila company. You are a bartender specializing in making drinks with Suerte brand tequila and specific ingredients that the user has on hand. The user will provide the Suerte brand tequila they have available as well as the available ingredients they have. Only use ingredients that the user provides other than ice. If none of the ingredients are appropriate for an alcoholic beverage, respond with the following example output: "I'm sorry, I cannot make a cocktail with the following ingredients: " followed by the inappropriate ingredients. Else, respond with the following example output using only appropriate ingredients for an alcoholic beverage:
 
             "Name: Pina-Lime-Suerte
 
@@ -48,16 +46,12 @@ app.post('/api/botender', async (req, res) => {
         },
         {
           role: 'user',
-          content: `I have Suerte Tequila Resposado and the following ingredients:
-          lemon, beef, chicken, lamb, pineapple, mint, orange, grapefruit.
-          Create a fun and unqiue drink name that
-          incorporates both the ingredients and Suerte branding, ingredients needed to make the drink,
-          measurements for the ingredients and instructions to make a tasty cocktail. If you cannot use the some of the listed ingredients, omit the ingredients you cannot use and return the example output. `,
+          content: `I have Suerte Tequila Resposado tequila and the following ingredients: lemon, beef, chicken, lamb, pineapple, mint, orange, grapefruit. Create a fun and unique drink name that uses Suerte branding, ingredients needed to make the drink, measurements for the ingredients, and instructions to make a tasty cocktail. Make the best tasting cocktail using only the tequila and ingredients specified, do not add extra ingredients. If all of the provided ingredients are inappropriate for a beverage, respond with "I'm sorry, I cannot make a cocktail with the following ingredients", followed by the inappropriate ingredients.`,
         },
         {
           role: 'assistant',
           content: `
-            "Name: Citrus-Mint Suerte
+            Name: Citrus-Mint Suerte
 
             Ingredients:
             - 2 oz Suerte Tequila Reposado
@@ -73,18 +67,20 @@ app.post('/api/botender', async (req, res) => {
             3. Shake vigorously to combine the ingredients and chill the mixture.
             4. Strain the cocktail into a glass filled with ice.
             5. Garnish with a mint sprig or a citrus slice, if desired.
-            6. Enjoy your refreshing Citrus-Mint Suerte cocktail!" End output immediately after the instructions.
+            6. Enjoy your refreshing Citrus-Mint Suerte cocktail!"
             `,
         },
         {
           role: 'user',
-          content: `I have ${tequila} tequila and the following ingredients:
-          ${ingredients}. Create a fun and unqiue drink name that
-          incorporates both the ingredients and Suerte branding, ingredients needed,
-          measurements for the ingredients and instructions to make a tasty cocktail.
-          Make the best tasting cocktail using only the tequila and ingredients specified,
-          do not add extra ingredients. If the ingredients are not edible, like socks or mold,
-          let the user know with a response that begins with I'm sorry, otherwise, create a tasty cocktail.`,
+          content: `I have Suerte Tequila Resposado tequila and the following ingredients: chicken, beef, pork, sausage. Create a fun and unique drink name that uses Suerte branding, ingredients needed to make the drink, measurements for the ingredients, and instructions to make a tasty cocktail. Make the best tasting cocktail using only the tequila and ingredients specified, do not add extra ingredients. If all of the provided ingredients are inappropriate for a beverage, respond with "I'm sorry, I cannot make a cocktail with the following ingredients", followed by the inappropriate ingredients."`,
+        },
+        {
+          role: 'assistant',
+          content: `I'm sorry, I cannot make a cocktail with the following ingredients: chicken, beef, pork, sausage.`,
+        },
+        {
+          role: 'user',
+          content: `I have ${tequila} tequila and the following ingredients: ${ingredients}. Create a fun and unique drink name that uses Suerte branding, ingredients needed to make the drink, measurements for the ingredients, and instructions to make a tasty cocktail. Make the best tasting cocktail using only the tequila and ingredients specified, do not add extra ingredients. If all of the provided ingredients are inappropriate for a beverage, respond with "I'm sorry, I cannot make a cocktail with the following ingredients", followed by the inappropriate ingredients."`,
         },
       ],
       model: 'gpt-4',
