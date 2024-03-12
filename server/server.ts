@@ -83,7 +83,7 @@ app.post('/api/botender', async (req, res) => {
           content: `I have ${tequila} tequila and the following ingredients: ${ingredients}. Create a fun and unique drink name that uses Suerte branding, ingredients needed to make the drink, measurements for the ingredients, and instructions to make a tasty cocktail. Make the best tasting cocktail using only the tequila and ingredients specified, do not add extra ingredients. If all of the provided ingredients are inappropriate for a beverage, respond with "I'm sorry, I cannot make a cocktail with the following ingredients", followed by the inappropriate ingredients."`,
         },
       ],
-      model: 'gpt-4',
+      model: 'gpt-3.5-turbo',
     });
     res.status(200).json(completion);
   } catch (err) {
