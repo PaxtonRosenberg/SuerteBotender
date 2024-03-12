@@ -146,9 +146,21 @@ li {
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 14px;
   line-height: 25px;
-  height: 100px;
-  width: 508px;
+  height: 120px;
+  width: 400px;
   text-align: center;
+  border: 1px solid #eee;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.errorBoxHeader {
+  width: 400px;
+}
+
+.textAlignLeft {
+  text-align: left;
+  margin-left: 1.5rem;
 }
 
 /* FOOTER */
@@ -216,6 +228,12 @@ footer {
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
     margin-top: 2rem;
+  }
+
+  .errorBox,
+  .errorBoxHeader {
+    width: 416px;
+    font-size: 12px;
   }
 
   footer {

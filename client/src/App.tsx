@@ -17,7 +17,6 @@ export default function App() {
   });
   const [tequila, setTequila] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -51,7 +50,6 @@ export default function App() {
       apiMessage === undefined
     ) {
       navigate('/error');
-      setErrorMessage(apiMessage);
     } else {
       const ingredientsString = apiMessage.substring(
         apiMessage.indexOf('Ingredients:') + 12,
@@ -102,9 +100,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Form />}></Route>
             <Route path="/recipe" element={<Recipe />}></Route>
-            <Route
-              path="/error"
-              element={<Error errorMessage={errorMessage} />}></Route>
+            <Route path="/error" element={<Error />}></Route>
           </Routes>
           <footer>
             <p>
