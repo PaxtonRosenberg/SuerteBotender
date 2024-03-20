@@ -37,16 +37,24 @@ export default function Recipe() {
   }, []);
 
   function renderIngredients() {
-    const result = generatedDrink.ingredients.map((ingredient, index) => {
-      return <li key={index}>{ingredient}</li>;
-    });
+    const result: JSX.Element[] = [];
+    for (let i = 0; i < generatedDrink.ingredients.length; i++) {
+      const ingredient = generatedDrink.ingredients[i];
+      if (ingredient) {
+        result.push(<li key={i}>{ingredient}</li>);
+      }
+    }
     return <ul>{result}</ul>;
   }
 
   function renderInstructions() {
-    const result = generatedDrink.instructions.map((instruction, index) => {
-      return <li key={index}>{instruction}</li>;
-    });
+    const result: JSX.Element[] = [];
+    for (let i = 0; i < generatedDrink.instructions.length; i++) {
+      const instruction = generatedDrink.instructions[i];
+      if (instruction) {
+        result.push(<li key={i}>{instruction}</li>);
+      }
+    }
     return <ul>{result}</ul>;
   }
 
