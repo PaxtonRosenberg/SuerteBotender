@@ -95,6 +95,11 @@ app.post('/api/botender', async (req, res) => {
   }
 });
 
+const reactStaticDir = new URL('../client/dist', import.meta.url).pathname;
+
+app.use(express.static(reactStaticDir));
+// Static directory for file uploads server/public/
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
