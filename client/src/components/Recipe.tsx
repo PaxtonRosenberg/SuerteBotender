@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
@@ -102,6 +102,7 @@ export default function Recipe() {
           </p>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 }
