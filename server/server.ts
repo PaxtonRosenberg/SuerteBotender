@@ -9,8 +9,6 @@ import {
 } from './lib/index.js';
 import OpenAI from 'openai';
 
-console.log('env:', process.env.OPENAI_API_KEY);
-
 const openai = new OpenAI();
 
 const app = express();
