@@ -38,7 +38,12 @@ export default function Form() {
             Suerte Tequila Reposado
           </option>
           <option value="Suerte Tequila Blanco">Suerte Tequila Blanco</option>
-          <option value="Suerte Tequila Gold">Suerte Tequila Gold</option>
+          <option value="Suerte Tequila Blanco Still Strength">
+            Suerte Tequila Blanco Still Strength
+          </option>
+          <option value="Suerte Tequila Extra Anejo">
+            Suerte Tequila Extra Anejo
+          </option>
         </select>
         <p className="formText">
           LIST ALL OF THE OTHER INGREDIENTS YOU HAVE ON HAND
