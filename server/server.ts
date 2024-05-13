@@ -88,7 +88,6 @@ app.post('/api/botender', async (req, res) => {
     });
     res.status(200).json(completion);
   } catch (err) {
-    console.log(err);
     res.status(500).send();
   }
 });
